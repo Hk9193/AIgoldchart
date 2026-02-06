@@ -1,16 +1,12 @@
+# config.py
 import os
-import streamlit as st
 
-# ✅ Works for: Local + Streamlit Cloud + Render
-TD_API_KEY = (
-    st.secrets.get("TD_API_KEY")
-    if hasattr(st, "secrets")
-    else None
-) or os.getenv("TD_API_KEY")
+# Read API key ONLY from environment variable (Render-compatible)
+TD_API_KEY = os.getenv("TD_API_KEY")
 
-if TD_API_KEY is None:
+if not TD_API_KEY:
     raise RuntimeError(
-        "TD_API_KEY not found. Set it as an environment variable or Streamlit secret."
+        "TD_API_KEY not found. Please set it in Render Environment Variables."
     )
 
 SYMBOL = "XAU/USD"
