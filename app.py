@@ -3,7 +3,7 @@ import plotly.graph_objects as go
 from datetime import datetime
 
 from data.fetch_data import fetch_xauusd
-from features.indicators import SMA, EMA, RSI, ATR
+from features.indicators import SMA, EMA, RSI, ATR, MACD, BOLLINGER_BANDS, STOCHASTIC_RSI
 from models.ml_model import train_model
 from inference.trade_logic import trade_setup
 from ui.theme import apply_theme
@@ -104,6 +104,10 @@ df["SMA"] = SMA(df["close"])
 df["EMA"] = EMA(df["close"])
 df["RSI"] = RSI(df["close"])
 df["ATR"] = ATR(df)
+# New indicators
+df["MACD"], df["MACD_Signal"], df["MACD_Hist"] = MACD(df["close"])
+df["BB_Upper"], df["BB_Middle"], df["BB_Lower"] = BOLLINGER_BANDS(df["close"])
+df["Stoch_K"], df["Stoch_D"] = STOCHASTIC_RSI(df["close"])
 
 # ---------------- HERO CHART ----------------
 with hero_right:
